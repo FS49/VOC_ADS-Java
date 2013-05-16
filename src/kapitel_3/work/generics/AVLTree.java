@@ -2,7 +2,7 @@ package kapitel_3.work.generics;
 
 public class AVLTree<T> extends SearchTree<T> {
     protected static class Node<T> extends Tree.Node<T> { // with an updated Node, storing also
-        int balance = 0;                             // a balance, the difference of the
+        public int balance = 0;                             // a balance, the difference of the
                                                      // height of its sub-trees
         public Node(Node<T> left, T data, Node<T> right) {
             super(left, data, right);
