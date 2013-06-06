@@ -79,11 +79,11 @@ public class Sorter {
         int ergCounter = 0;
 
         while (ergCounter < a.length + b.length) {
-            if (aCounter >= a.length)
+            if (aCounter == a.length)
                 erg[ergCounter++] = b[bCounter++];
-            else if (bCounter >= b.length)
+            else if (bCounter == b.length)
                 erg[ergCounter++] = a[aCounter++];
-            else if (a[aCounter] < b[bCounter])
+            else if (a[aCounter] <= b[bCounter])
                 erg[ergCounter++] = a[aCounter++];
             else
                 erg[ergCounter++] = b[bCounter++];
@@ -143,7 +143,7 @@ public class Sorter {
         int i = left + 1;  // Start index for reordering from the left and from the right
         int j = right - 1; // omit the already reordered leftmost and rightmost elements
         
-        while (i <= j) { // Iterate, as long as there are elements to reorder
+        while (i < j) { // Iterate, as long as there are elements to reorder
             while (i < right && a[i] <= x) { i = i + 1; } // Omit elements already
             while (j > left && a[j] >= x) { j = j - 1; }  // correctly placed
             if (i < j) {           // Are there still elements to reorder?

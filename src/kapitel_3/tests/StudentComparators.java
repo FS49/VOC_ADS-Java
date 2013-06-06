@@ -11,7 +11,7 @@ public class StudentComparators {
 
 		public int compare(Object data, IKey key) {
 			Student student = (Student) data;
-			StudentKeys.SurNameKey sKey = (StudentKeys.SurNameKey)key;
+			StudentKeys.SurNameKey sKey = (StudentKeys.SurNameKey) key;
 			
 			return student.surName.compareTo(sKey.surName);
 		}
