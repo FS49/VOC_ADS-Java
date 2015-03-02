@@ -8,7 +8,7 @@ public class BTree {
 	protected static class Node {
 		public Node parent = null;	// Reference to the parent node
 		public Node right = null;	// Reference to the right child-node
-		public Node left = null;	// Reference to the left child-node
+		public Node left = null;	    // Reference to the left child-node
 		public Object data = null;	// Reference to the stored data set
 		
 		public Node(Node left, Object data, Node right) { // Construct a new node by

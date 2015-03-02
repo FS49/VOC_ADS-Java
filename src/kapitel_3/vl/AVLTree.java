@@ -3,7 +3,7 @@ package kapitel_3.vl;
 public class AVLTree extends SearchTree {         // An AVLTree is a SearchTree
 	protected static class AVLNode extends Node { // with an updated Node, storing also
 		public int balance = 0;                   // a balance, the difference of the
-		                                          // height of its sub-trees
+		                                          // heights of its sub-trees
 		public AVLNode(Node left, Object data, Node right) {
 			super(left, data, right);
 		}

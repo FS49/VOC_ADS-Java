@@ -4,7 +4,7 @@ import kapitel_3.vl.IKey;
 import kapitel_3.vl.IRIterator;
 
 public class PriorityQueue {
-	MyDList list = new MyDList();
+	UE3DList list = new UE3DList();
 	
 	protected static class PriorityProxy {
 		int prio;
