@@ -1,13 +1,13 @@
 package uebung_2.tests;
 
-import uebung_2.ue.MySList;
+import uebung_2.ue.UE1SList;
 import kapitel_3.vl.IFIterator;
 
 public class TelephonebookEntry {
 	private String surName = null;
 	private String name = null;
 	private String address = null;
-	private MySList telNumbers = new MySList();
+	private UE1SList telNumbers = new UE1SList();
 	
 	public TelephonebookEntry(String name, String surName, String address) {
 		this.name = name;
