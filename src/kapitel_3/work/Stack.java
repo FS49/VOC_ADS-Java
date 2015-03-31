@@ -1,7 +1,5 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IFIterator;
-
 public class Stack {
 	private SList list = new SList();
 	private int size = 0;

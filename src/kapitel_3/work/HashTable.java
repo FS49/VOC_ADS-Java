@@ -1,8 +1,5 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IFIterator;
-import kapitel_3.vl.IKey;
-
 public class HashTable {
 	protected Bucket[] buckets = null;
 	protected int size = 0;
