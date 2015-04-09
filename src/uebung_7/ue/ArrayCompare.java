@@ -1,4 +1,4 @@
-package uebung_5.ue;
+package uebung_7.ue;
 public class ArrayCompare {
 	public static boolean arrayCompare(byte[] a1, byte[] a2) {
 		int i = 0;

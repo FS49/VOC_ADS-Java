@@ -102,7 +102,7 @@ public class NDamenProblem {
     }
     
     public static void main(String[] args) {
-        int n = 11;
+        int n = 12;
         
         boolean[][] array = new boolean[n][n];
         

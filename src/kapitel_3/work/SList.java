@@ -50,7 +50,9 @@ public class SList {
 	public void remove(Object data) {        // Remove the node storing the object.
 		Node prev = searchForPrevNode(data); // Search for the node prior to the one
 		                                     // to bee removed.
-		removeNextNode(prev); // Remove the desired node next to prev.
+		if (prev != null || head != null && head.data == data) {
+		    removeNextNode(prev); // Remove the desired node next to prev.
+		}
 	}
 	
 	private static class SListIterator implements IFIterator { // An iterator for

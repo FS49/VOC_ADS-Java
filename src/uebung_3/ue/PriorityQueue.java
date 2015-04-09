@@ -4,15 +4,15 @@ import kapitel_3.vl.IKey;
 import kapitel_3.vl.IRIterator;
 
 public class PriorityQueue {
-	UE3DList list = new UE3DList();
+	DList list = new DList();
 	
 	protected static class PriorityProxy {
-		int prio;
+		int priority;
 		Object data;
 		
-		public PriorityProxy(Object data, int prio) {
+		public PriorityProxy(Object data, int priority) {
 			this.data = data;
-			this.prio = prio;
+			this.priority = priority;
 		}
 	}
 	
@@ -24,13 +24,13 @@ public class PriorityQueue {
 	    }
 	    
         public boolean matches(Object data) {
-            return ((PriorityProxy) data).prio <= prio;
+            return ((PriorityProxy) data).priority <= prio;
         }
 	}
 
-	public void enqueue(Object data, int prio) {
-		PriorityProxy prevProxy = (PriorityProxy) list.forwardSearch(new PriorityProxyKey(prio));
-		PriorityProxy newProxy = new PriorityProxy(data, prio);
+	public void insert(Object data, int priority) {
+		PriorityProxy prevProxy = (PriorityProxy) list.forwardSearch(new PriorityProxyKey(priority));
+		PriorityProxy newProxy = new PriorityProxy(data, priority);
 		
 		if (prevProxy != null) {
 		    list.insertBefore(prevProxy, newProxy);
@@ -39,7 +39,7 @@ public class PriorityQueue {
 		}
 	}
 	
-	public Object dequeue() {
+	public Object extractMin() {
 		Object data = null;
 		IRIterator it = list.rIterator();
 		

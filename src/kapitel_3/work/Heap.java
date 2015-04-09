@@ -1,9 +1,9 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IComparator;
-import kapitel_3.vl.IKey;
+import kapitel_3.work.IComparator;
+import kapitel_3.work.IKey;
 
-public abstract class Heap extends Tree {
+public abstract class Heap extends BTree {
 	protected IComparator comparator = null;
 	
 	protected abstract int comparatorSign();

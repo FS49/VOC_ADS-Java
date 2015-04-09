@@ -59,28 +59,28 @@ public class ExperimentalAVLTree<T> extends AVLTree<T> implements IPGFTree<T> {
 
     @Override
     public String getSubTreeFormatFormat(
-            kapitel_3.work.generics.Tree.Node<T> node) {
+            kapitel_3.work.generics.BTree.Node<T> node) {
         return "";
     }
 
     @Override
-    public String getNodeFormat(kapitel_3.work.generics.Tree.Node<T> node) {
+    public String getNodeFormat(kapitel_3.work.generics.BTree.Node<T> node) {
         return "label={[draw=none]below:\\tiny " + ((Node<T>) node).balance + "}";
     }
 
     @Override
-    public String getChildrenFormat(kapitel_3.work.generics.Tree.Node<T> node) {
+    public String getChildrenFormat(kapitel_3.work.generics.BTree.Node<T> node) {
         return "";
     }
 
     @Override
-    public String getChildFormat(kapitel_3.work.generics.Tree.Node<T> node) {
+    public String getChildFormat(kapitel_3.work.generics.BTree.Node<T> node) {
         return "";
     }
 
     @Override
     public String getEdgeFromParentFormat(
-            kapitel_3.work.generics.Tree.Node<T> node) {
+            kapitel_3.work.generics.BTree.Node<T> node) {
         return "";
     }
 }

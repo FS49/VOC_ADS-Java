@@ -1,4 +1,4 @@
-package uebung_5.ue;
+package uebung_7.ue;
 public class Algorithms {
 	public static int simpleAlgorithm(int x, int n) {
 		int p = 1;

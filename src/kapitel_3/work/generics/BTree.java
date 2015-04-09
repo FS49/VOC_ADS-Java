@@ -1,6 +1,6 @@
 package kapitel_3.work.generics;
 
-public class Tree<T> {
+public class BTree<T> {
     protected Node<T> root = null; // The root of the tree
     
     protected static class Node<T> {
@@ -103,65 +103,68 @@ public class Tree<T> {
         }
     }
     
-    private static <T> T depthFirstPreOrderSearch(Node<T> current, IKey<T> key) { // Search for
-        T data = null; // a data set based on the depth-first pre-order traversal
+    protected static <T> Node<T> depthFirstPreOrderSearch(Node<T> current, IKey<T> key) { // Search for
+        Node<T> foundNode = null; // a data set based on the depth-first pre-order traversal
         
         if (current != null) { // We have not found the data set by reaching the bottom
             if (key.matches(current.data)) { // If the current node stores the requested
-                data = current.data;        // data set remember its reference
+                foundNode = current;        // data set remember its reference
             } else { // If the current node didn't store the requested data set
-                data = depthFirstPreOrderSearch(current.left, key); // search the left
-                if (data == null) { // If the data set wasn't found at the left try to find
-                    data = depthFirstPreOrderSearch(current.right, key); // it at the right
+                foundNode = depthFirstPreOrderSearch(current.left, key); // search the left
+                if (foundNode == null) { // If the data set wasn't found at the left try to find
+                    foundNode = depthFirstPreOrderSearch(current.right, key); // it at the right
                 }
             }
         }
-        return data; // Return either null or the reference to the requested data set 
+        return foundNode; // Return either null or the reference to the requested data set 
     }
 
     public T depthFirstPreOrderSearch(IKey<T> key) { // Trigger the depth-first pre-order
-        return depthFirstPreOrderSearch(root, key);    // search process
+        Node<T> foundNode = depthFirstPreOrderSearch(root, key);
+        return foundNode != null ? foundNode.data : null;    // search process
     }
     
-    private static <T> T depthFirstInOrderSearch(Node<T> current, IKey<T> key) { // Search for
-        T data = null; // a data set based on the depth-first pre-order traversal
+    protected static <T> Node<T> depthFirstInOrderSearch(Node<T> current, IKey<T> key) { // Search for
+        Node<T> foundNode = null; // a data set based on the depth-first pre-order traversal
         
         if (current != null) { // We have not found the data set by reaching the bottom
-            data = depthFirstInOrderSearch(current.left, key); // Search at the left side
-            if (data == null && key.matches(current.data)) { // Not found but current stores
-                data = current.data; // the requested data set, store its reference
-            } else if (data == null) { // Still not found - search at the right
-                    data = depthFirstInOrderSearch(current.right, key);
+            foundNode = depthFirstInOrderSearch(current.left, key); // Search at the left side
+            if (foundNode == null && key.matches(current.data)) { // Not found but current stores
+                foundNode = current; // the requested data set, store its reference
+            } else if (foundNode == null) { // Still not found - search at the right
+                    foundNode = depthFirstInOrderSearch(current.right, key);
             }
         }
-        return data; // Return either null or the reference to the requested data set
+        return foundNode; // Return either null or the reference to the requested data set
     }
 
     public T depthFirstInOrderSearch(IKey<T> key) { // Trigger the depth-first in-order
-        return depthFirstInOrderSearch(root, key);    // search process
+        Node<T> foundNode = depthFirstInOrderSearch(root, key);
+        return foundNode != null ? foundNode.data : null;    // search process
     }
     
-    private static <T> T depthFirstPostOrderSearch(Node<T> current, IKey<T> key) { // Search for
-        T data = null; // a data set based on the depth-first pre-order traversal
+    protected static <T> Node<T> depthFirstPostOrderSearch(Node<T> current, IKey<T> key) { // Search for
+        Node<T> foundNode = null; // a data set based on the depth-first pre-order traversal
         
         if (current != null) { // we have not found the data set by reaching the bottom
-            data = depthFirstPostOrderSearch(current.left, key); // Search at the left side
-            if (data == null) { // Not found? Than search also on the
-                data = depthFirstPostOrderSearch(current.right, key); // right side
-                if (data == null && key.matches(current.data)) { // Not found on the left
-                    data = current.data; // side but in current - remember the reference.
+            foundNode = depthFirstPostOrderSearch(current.left, key); // Search at the left side
+            if (foundNode == null) { // Not found? Than search also on the
+                foundNode = depthFirstPostOrderSearch(current.right, key); // right side
+                if (foundNode == null && key.matches(current.data)) { // Not found on the left
+                    foundNode = current; // side but in current - remember the reference.
                 }
             }
         }
-        return data; // Return either null or the reference to the requested data set
+        return foundNode; // Return either null or the reference to the requested data set
     }
     
     public T depthFirstPostOrderSearch(IKey<T> key) { // Trigger the depth-first
-        return depthFirstPostOrderSearch(root, key);    // post-order search process
+        Node<T> foundNode = depthFirstPostOrderSearch(root, key);
+        return foundNode != null ? foundNode.data : null;    // post-order search process
     }
     
     public T search(IKey<T> key) {
-        return depthFirstPreOrderSearch(root, key);
+        return depthFirstPreOrderSearch(key);
     }
     
     public T breadthFirstSearch(IKey<T> key) {   // Search for a data set based on the

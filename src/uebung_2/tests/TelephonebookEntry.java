@@ -1,13 +1,13 @@
 package uebung_2.tests;
 
-import uebung_2.ue.UE2SList;
+import uebung_2.ue.SList;
 import kapitel_3.vl.IFIterator;
 
 public class TelephonebookEntry {
 	private String surName = null;
 	private String name = null;
 	private String address = null;
-	private UE2SList telNumbers = new UE2SList();
+	private SList telNumbers = new SList();
 	
 	public TelephonebookEntry(String name, String surName, String address) {
 		this.name = name;

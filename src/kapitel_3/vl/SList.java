@@ -17,18 +17,22 @@ public class SList {
 		head = new Node(data, head);   // Do this by prepending a node to the list.
 	}
 	
-	public Object search(IKey key) { // Search for an object matching a given key.
-		Node current = head;         // current references one node at a time.
-		
+	protected Node search(Node current, IKey key) { // Search for an node by using a key.
 		while(current != null && !key.matches(current.data)) {  // Iterate for all nodes 
 			  						// in the list but interrupt if the object is found.
 			current = current.next; // Not found! Jump to the next node.
 		}	
 		                            // If found return the object else return null.
-		return (current != null) ? current.data : null;
+		return current;
 	}
 	
-	private void removeNextNode(Node prev) { // Remove the next node of the passed one.
+	public Object search(IKey key) {
+	    Node foundNode = search(head, key);
+	    
+	    return foundNode != null ? foundNode.data : null;
+	}
+	
+	protected void removeNextNode(Node prev) { // Remove the next node of the passed one.
 		if (prev == null && head != null) {  // Shall we delete the first node?
 			head = head.next;                // Yes, thus delete it!
 		} else if (prev != null && prev.next != null){ // Is there a node to delete?
@@ -36,7 +40,7 @@ public class SList {
 		}
 	}
 	
-	private Node searchForPrevNode(Object data) { // Search for the node prior to the
+	protected Node searchForPrevNode(Object data) { // Search for the node prior to the
 		Node current = head;                      // node storing the passed object.
 		Node prev = null;
 		

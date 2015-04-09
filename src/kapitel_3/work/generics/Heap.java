@@ -1,6 +1,6 @@
 package kapitel_3.work.generics;
 
-public abstract class Heap<T> extends Tree<T> {
+public abstract class Heap<T> extends BTree<T> {
 	protected IComparator<T> comparator = null;
 	
 	protected abstract int comparatorSign();

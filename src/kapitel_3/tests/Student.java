@@ -14,4 +14,10 @@ public class Student {
 	public String toString() {
 		return "Name: " + name + "\nSurname: " + surName + "\nMatrNr: " + matrNr;
 	}
+	
+	public String getName() { return name; }
+	
+	public String getSurName() { return surName; }
+	
+	public String getMatrNr() { return matrNr; }
 }

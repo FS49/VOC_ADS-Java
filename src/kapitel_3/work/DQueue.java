@@ -1,6 +1,6 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IFIterator;
+import kapitel_3.work.IFIterator;
 
 public class DQueue extends Queue {
 	public void enqueueReverse(Object data) {

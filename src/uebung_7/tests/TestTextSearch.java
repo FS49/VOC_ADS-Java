@@ -1,6 +1,6 @@
-package uebung_5.tests;
+package uebung_7.tests;
 
-import uebung_5.ue.TextSearch;
+import uebung_7.ue.TextSearch;
 
 public class TestTextSearch {
 	public static void main(String[] args) {

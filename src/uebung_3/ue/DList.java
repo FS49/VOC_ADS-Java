@@ -1,8 +1,8 @@
 package uebung_3.ue;
 
-import kapitel_3.vl.DList;
+import kapitel_3.vl.ReferenceKey;
 
-public class UE3DList extends DList {
+public class DList extends kapitel_3.vl.DList {
 	protected void insertAfter(Node current, Object data) {		
 		if (current != null) {
 			Node newNode = new Node(current, data, current.next);
@@ -17,7 +17,8 @@ public class UE3DList extends DList {
 	}
 	
 	public boolean insertAfter(Object prev, Object data) {
-		Node current = forwardSearchNode(prev);
+	    ReferenceKey key = new ReferenceKey(prev);
+		Node current = forwardSearch(head, key);
 		insertAfter(current, data);
 		
 		return current != null;
@@ -37,7 +38,8 @@ public class UE3DList extends DList {
 	}
 	
 	public boolean insertBefore(Object next, Object data) {
-		Node current = forwardSearchNode(next);
+	    ReferenceKey key = new ReferenceKey(next);
+		Node current = forwardSearch(head, key);
 		insertBefore(current, data);
 		
 		return current != null;

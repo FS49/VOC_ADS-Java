@@ -1,9 +1,9 @@
 package kapitel_3.work;
 
-class ObjectKey implements IKey {
+class ReferenceKey implements IKey {
     Object data = null;
     
-    ObjectKey(Object data) {
+    ReferenceKey(Object data) {
         this.data = data;
     }
     

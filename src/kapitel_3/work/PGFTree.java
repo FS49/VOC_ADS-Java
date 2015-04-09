@@ -1,10 +1,11 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IComparator;
-import kapitel_3.vl.IKey;
+import kapitel_3.work.IComparator;
+import kapitel_3.work.IKey;
+import kapitel_3.work.BTree;
 
 public class PGFTree {
-    Tree tree = null;
+    BTree tree = null;
     
     private static final String pgfHeader = "\\begin{tikzpicture}\n" 
             + "    \\tikzset{\n"
@@ -216,11 +217,11 @@ public class PGFTree {
         return new PGFKey(key);
     }
     
-    public PGFTree(Tree tree) {
+    public PGFTree(BTree tree) {
         this.tree = tree;
     }
     
-    protected String treeToPGF(Tree.Node currentRoot, String tabs) {
+    protected String treeToPGF(BTree.Node currentRoot, String tabs) {
         String pgfTree = "[missing]";
         
         if (currentRoot != null) {

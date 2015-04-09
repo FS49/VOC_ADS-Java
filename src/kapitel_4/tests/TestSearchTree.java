@@ -2,8 +2,8 @@ package kapitel_4.tests;
 
 import kapitel_3.tests.IntegerComparator;
 import kapitel_3.vl.IComparator;
-import kapitel_3.work.PrintTree;
-import kapitel_3.work.SearchTree;
+import kapitel_3.vl.PrintTree;
+import kapitel_3.vl.SearchTree;
 
 public class TestSearchTree {
 	public static void main(String[] args) {

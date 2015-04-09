@@ -1,9 +1,8 @@
 package uebung_2.ue;
 
 import kapitel_3.vl.IKey;
-import kapitel_3.vl.SList;
 
-public class UE2SList extends SList {
+public class SList extends kapitel_3.vl.SList {
 	protected Node searchForLastNode() {
 		Node current = head;
 		
@@ -25,18 +24,8 @@ public class UE2SList extends SList {
 		}
 	}
 	
-	protected Node searchForNode(IKey key) {
-		Node current = head;
-		
-		while(current != null && !key.matches(current.data)) {
-			current = current.next;
-		}
-		
-		return current;
-	}
-	
 	public boolean insert(IKey key, Object data) {
-		Node previousNode = searchForNode(key);
+		Node previousNode = search(head, key);
 		
 		if (previousNode != null) {
 			previousNode.next = new Node(data, previousNode.next);
@@ -45,20 +34,15 @@ public class UE2SList extends SList {
 		return previousNode != null;
 	}
 	
-	public UE2SList searchAll(IKey key) {
-		UE2SList allList = new UE2SList();
+	public SList searchAll(IKey key) {
+		SList allList = new SList();
 		
-		Node current = head;
-		while(current != null) {
+		for (Node current = head; current != null; current = current.next) {
 			if (key.matches(current.data)) {
 				allList.prepend(current.data);
 			}
 		}
 		
 		return allList;
-	}
-	
-	public Object getFirst() {
-		return (head != null) ? head.data : null;
 	}
 }

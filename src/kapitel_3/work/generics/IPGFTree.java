@@ -1,6 +1,6 @@
 package kapitel_3.work.generics;
 
-import kapitel_3.work.generics.Tree.Node;
+import kapitel_3.work.generics.BTree.Node;
 
 public interface IPGFTree<T> {
     String getSubTreeFormatFormat(Node<T> node);

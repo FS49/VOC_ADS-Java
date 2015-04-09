@@ -134,11 +134,9 @@ public abstract class Heap extends BTree {
 	}
 	
 	public boolean remove(Object data) {
-		Node toRemove = heapSearch(root, data);
+	    ReferenceKey key = new ReferenceKey(data);
 		
-		remove(toRemove);
-		
-		return toRemove != null;
+		return remove(key);
 	}
 	
 	public Object extractRoot() {
@@ -166,25 +164,6 @@ public abstract class Heap extends BTree {
 					}
 					break;
 				case +1:
-					break;
-			}
-		}
-		return found;
-	}
-	
-	protected Node heapSearch(Node currentRoot, Object data) {
-		Node found = null;
-		
-		if (currentRoot != null) {
-			switch(cs * comparator.compare(currentRoot.data, data)) {
-				case 0:
-					found = currentRoot;
-					break;
-				case -1:
-					found = heapSearch(currentRoot.left, data);
-					if (found == null) {
-						found = heapSearch(currentRoot.right, data);
-					}
 					break;
 			}
 		}

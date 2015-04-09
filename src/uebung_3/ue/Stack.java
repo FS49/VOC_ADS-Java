@@ -1,11 +1,10 @@
 package uebung_3.ue;
 
 import kapitel_3.vl.IFIterator;
-//import kapitel_3.vl.SList;
-import uebung_2.ue.UE2SList;
+import kapitel_3.vl.SList;
 
 public class Stack {
-	private UE2SList list = new UE2SList();
+	private SList list = new SList();
 	private int size = 0;
 	
 	public void push(Object data) {
@@ -26,7 +25,7 @@ public class Stack {
 		return data;
 	}
 	
-	public Object top() {
+	public Object peek() {
 		Object data = null;
 		
 		IFIterator it = list.iterator();

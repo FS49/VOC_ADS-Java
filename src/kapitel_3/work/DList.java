@@ -1,9 +1,9 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IBIterator;
-import kapitel_3.vl.IFIterator;
-import kapitel_3.vl.IKey;
-import kapitel_3.vl.IRIterator;
+import kapitel_3.work.IBIterator;
+import kapitel_3.work.IFIterator;
+import kapitel_3.work.IKey;
+import kapitel_3.work.IRIterator;
 
 public class DList {
 	protected Node head = null; // The head of the list.
@@ -39,24 +39,36 @@ public class DList {
 		}
 	}
 	
-	public Object forwardSearch(IKey key) { // Forward search for an object matching
-		Node current = head;               // a given key.
-		
-		while(current != null && !key.matches(current.data)) { // Iterate for all nodes 
-									// in the list but interrupt if the object is found.
-			current = current.next; // Not found! Jump to the next node.
-		}   						// If found return the object otherwise return null.
-		return (current != null) ? current.data : null;
-	}
+	protected Node forwardSearchNode(IKey key) {
+	    Node current = head;
 
-	public Object reverseSearch(IKey key) { // Reverse search for an object matching
-		Node current = tail;               // a given key.
+        while(current != null && !key.matches(current.data)) { // Iterate for all nodes 
+                                    // in the list but interrupt if the object is found.
+            current = current.next; // Not found! Jump to the next node.
+        }                           // If found return the object otherwise return null.
+        return current;
+	}
+	
+	public Object forwardSearch(IKey key) {      // Forward search for an object matching
+		Node foundNode = forwardSearchNode(key); // a given key.
 		
-		while(current != null && !key.matches(current.data)) { // Iterate for all nodes 
-									// in the list but interrupt if the object is found.
-			current = current.prev; // Not found! Jump to the previous node.
-		}							// If found return the object otherwise return null.		
-		return (current != null) ? current.data : null;
+		return (foundNode != null) ? foundNode.data : null;
+	}
+    
+    protected Node reverseSearchNode(IKey key) { // Reverse search for the specific
+        Node current = tail;               // a given key.
+        
+        while(current != null && !key.matches(current.data)) { // Iterate for all nodes 
+                                    // in the list but interrupt if the object is found.
+            current = current.prev; // Not found! Jump to the previous node.
+        }                           // If found return the object otherwise return null.        
+        return current;
+    }
+
+	public Object reverseSearch(IKey key) {      // Reverse search for an object matching
+        Node foundNode = reverseSearchNode(key); // a given key.
+        
+        return (foundNode != null) ? foundNode.data : null;
 	}
 	
 	private void removeNode(Node toRemove) { // Remove the passed node.
@@ -74,36 +86,20 @@ public class DList {
 		}
 	}
 	
-	protected Node forwardSearchNode(Object data) { // Forward search for the specific
-		Node current = head;				// node referring the passed data object.
-		
-		while(current != null && data != current.data) { // Iterate for all nodes
-			current = current.next; // but interrupt if the node has been found.
-		}
-		
-		return current; // Return the found node or null otherwise.
-	}
-	
 	public void forwardRemove(Object data) { // Forward remove the node referring data.
-		Node toRemove = forwardSearchNode(data); // Search for the node to be removed.
+	    ReferenceKey key = new ReferenceKey(data); // Create a key matching the data set
+	    
+		Node toRemove = forwardSearchNode(key); // Search for the node to be removed.
 		
-		removeNode(toRemove); // Remove the desired node.
-	}
-	
-	protected Node reverseSearchNode(Object data) { // Reverse search for the specific
-		Node current = tail;                // node referring the passed data object.
-		
-		while(current != null && data != current.data) { // Iterate for all nodes
-			current = current.prev; // but interrupt if the node has been found.
-		}
-		
-		return current; // Return the found node or null otherwise.
+		removeNode(toRemove);               // Remove the desired node.
 	}
 	
 	public void reverseRemove(Object data) { // Reverse remove the node referring data.
-		Node toRemove = reverseSearchNode(data); // Search for the node to be removed.
-		
-		removeNode(toRemove); // Remove the desired node.
+	    ReferenceKey key = new ReferenceKey(data);
+	    
+		Node toRemove = reverseSearchNode(key); // Search for the node to be removed.
+
+	    removeNode(toRemove);               // Remove the desired node.
 	}
 	
 	private static class DListIterator extends IBIterator { // An iterator

@@ -7,18 +7,18 @@ public class TestPriorityQueue {
 	public static void main(String[] args) {
 		PriorityQueue queue = new PriorityQueue();
 		
-		queue.enqueue(1, 3);
-		queue.enqueue(2, 4);
-		queue.enqueue(3, 2);
-		queue.enqueue(4, 3);
-		queue.enqueue(5, 4);
+		queue.insert(1, 3);
+		queue.insert(2, 4);
+		queue.insert(3, 2);
+		queue.insert(4, 3);
+		queue.insert(5, 4);
 		
-		System.out.println((Integer) queue.dequeue());
-		System.out.println((Integer) queue.dequeue());
-		System.out.println((Integer) queue.dequeue());
-		System.out.println((Integer) queue.dequeue());
-		System.out.println((Integer) queue.dequeue());
-		System.out.println((Integer) queue.dequeue());
+		System.out.println((Integer) queue.extractMin());
+		System.out.println((Integer) queue.extractMin());
+		System.out.println((Integer) queue.extractMin());
+		System.out.println((Integer) queue.extractMin());
+		System.out.println((Integer) queue.extractMin());
+		System.out.println((Integer) queue.extractMin());
 		
 		Stack stack = new Stack();
 		

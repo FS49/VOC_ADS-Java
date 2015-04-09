@@ -1,6 +1,6 @@
 package kapitel_3.work.generics;
 
-public class SearchTree<T> extends Tree<T> {
+public class SearchTree<T> extends BTree<T> {
     protected IComparator<T> comparator = null; // A comparator used to compare data sets
     
     public SearchTree(IComparator<T> comparator) { // Create a SearchTree which uses

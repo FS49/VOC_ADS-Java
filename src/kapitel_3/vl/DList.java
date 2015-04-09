@@ -34,24 +34,32 @@ public class DList {
 		}
 	}
 	
-	public Object forwardSearch(IKey key) { // Forward search for an object matching
-		Node current = head;                // a given key.
-		
+	protected Node forwardSearch(Node current, IKey key) { // Forward search by a key
 		while(current != null && !key.matches(current.data)) { // Iterate for all nodes 
 									// in the list but interrupt if the object is found.
 			current = current.next; // Not found! Jump to the next node.
 		}   						// If found return the object otherwise return null.
-		return (current != null) ? current.data : null;
+		return current;
+	}
+	
+	public Object forwardSearch(IKey key) {
+	    Node foundNode = forwardSearch(head, key);
+	    
+	    return foundNode != null ? foundNode.data : null;
 	}
 
-	public Object reverseSearch(IKey key) { // Reverse search for an object matching
-		Node current = tail;               // a given key.
-		
+	protected Node reverseSearch(Node current, IKey key) { // Reverse search by a key
 		while(current != null && !key.matches(current.data)) { // Iterate for all nodes 
 									// in the list but interrupt if the object is found.
 			current = current.prev; // Not found! Jump to the previous node.
 		}							// If found return the object otherwise return null.		
-		return (current != null) ? current.data : null;
+		return current;
+	}
+	
+	public Object reverseSearch(IKey key) {
+	    Node foundNode = reverseSearch(tail, key);
+	    
+	    return foundNode != null ? foundNode.data : null;
 	}
 	
 	private void removeNode(Node toRemove) { // Remove the passed node.
@@ -69,34 +77,16 @@ public class DList {
 		}
 	}
 	
-	protected Node forwardSearchNode(Object data) { // Forward search for the specific
-		Node current = head;				// node referring the passed data object.
-		
-		while(current != null && data != current.data) { // Iterate for all nodes
-			current = current.next; // but interrupt if the node has been found.
-		}
-		
-		return current; // Return the found node or null otherwise.
-	}
-	
 	public void forwardRemove(Object data) { // Forward remove the node referring data.
-		Node toRemove = forwardSearchNode(data); // Search for the node to be removed.
+	    ReferenceKey key = new ReferenceKey(data);
+		Node toRemove = forwardSearch(head, key); // Search for the node to be removed.
 		
 		removeNode(toRemove); // Remove the desired node.
 	}
 	
-	protected Node reverseSearchNode(Object data) { // Reverse search for the specific
-		Node current = tail;                // node referring the passed data object.
-		
-		while(current != null && data != current.data) { // Iterate for all nodes
-			current = current.prev; // but interrupt if the node has been found.
-		}
-		
-		return current; // Return the found node or null otherwise.
-	}
-	
 	public void reverseRemove(Object data) { // Reverse remove the node referring data.
-		Node toRemove = reverseSearchNode(data); // Search for the node to be removed.
+	    ReferenceKey key = new ReferenceKey(data);
+		Node toRemove = reverseSearch(tail, key); // Search for the node to be removed.
 		
 		removeNode(toRemove); // Remove the desired node.
 	}

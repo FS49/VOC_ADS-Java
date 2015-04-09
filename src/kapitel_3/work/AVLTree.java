@@ -1,9 +1,9 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IComparator;
+import kapitel_3.work.IComparator;
 
 public class AVLTree extends SearchTree {         // An AVLTree is a SearchTree
-	protected static class Node extends Tree.Node { // with an updated Node, storing also
+	protected static class Node extends BTree.Node { // with an updated Node, storing also
 		public int balance = 0;                             // a balance, the difference of the
 		                                             // height of its sub-trees
 		public Node(Node left, Object data, Node right) {
@@ -178,7 +178,6 @@ public class AVLTree extends SearchTree {         // An AVLTree is a SearchTree
 			removeLeaf(toRemove);
 		}
 	}
-
     
     protected static boolean isBalanceValid(Node node) { // Check if the tree is a valid
         boolean answer = true;                      // AVL-Tree, e.g. the balances of

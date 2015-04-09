@@ -8,7 +8,7 @@ public class BTree {
 	protected static class Node {
 		public Node parent = null;	// Reference to the parent node
 		public Node right = null;	// Reference to the right child-node
-		public Node left = null;	    // Reference to the left child-node
+		public Node left = null;	// Reference to the left child-node
 		public Object data = null;	// Reference to the stored data set
 		
 		public Node(Node left, Object data, Node right) { // Construct a new node by
@@ -26,7 +26,7 @@ public class BTree {
 		}
 	}
 	
-	private static void depthFirstPreOrder(Node current, IWorker worker) { // Traverse
+	protected static void depthFirstPreOrder(Node current, IWorker worker) { // Traverse
 		if (current != null) {						   // the tree pre-order depth-first
 			worker.work(current.data);				   // Process the data set
 			depthFirstPreOrder(current.left, worker);  // Recursive call with left child
@@ -38,7 +38,7 @@ public class BTree {
 		depthFirstPreOrder(root, worker);			 // traversal starting at the root
 	}                                                // of the tree
 	
-	private static void depthFirstInOrder(Node current, IWorker worker) { // Traverse
+	protected static void depthFirstInOrder(Node current, IWorker worker) { // Traverse
 		if (current != null) {						  // the tree in-order depth-first
 			depthFirstInOrder(current.left, worker);  // Recursive call with left child
 			worker.work(current.data); 				  // Process the data set
@@ -50,7 +50,7 @@ public class BTree {
 		depthFirstInOrder(root, worker);            // traversal starting at the root
 	}												// of the tree
 	
-	private static void depthFirstPostOrder(Node current, IWorker worker) { // Traverse
+	protected static void depthFirstPostOrder(Node current, IWorker worker) { // Traverse
 		if (current != null) {							// the tree post-order depth-first
 			depthFirstPostOrder(current.left, worker);  // Recursive call with left child
 			depthFirstPostOrder(current.right, worker); // Recursive call with right child
@@ -80,74 +80,77 @@ public class BTree {
 		}
 	}
 	
-	private static Object depthFirstPreOrderSearch(Node current, IKey key) { // Search for
-		Object data = null; // a data set based on the depth-first pre-order traversal
+	protected static Node depthFirstPreOrderSearch(Node current, IKey key) { // Search for
+		Node foundNode = null; // a data set based on the depth-first pre-order traversal
 		
 		if (current != null) { // We have not found the data set by reaching the bottom
 			if (key.matches(current.data)) { // If the current node stores the requested
-				data = current.data;        // data set remember its reference
+				foundNode = current;         // data set remember its reference
 			} else { // If the current node didn't store the requested data set
-				data = depthFirstPreOrderSearch(current.left, key); // search the left
-				if (data == null) { // If the data set wasn't found at the left try to find
-					data = depthFirstPreOrderSearch(current.right, key); // it at the right
+				foundNode = depthFirstPreOrderSearch(current.left, key); // search the left
+				if (foundNode == null) { // Not found at the left try to find at the right
+					foundNode = depthFirstPreOrderSearch(current.right, key);
 				}
 			}
 		}
-		return data; // Return either null or the reference to the requested data set 
+		return foundNode; // Return either null or the reference to the requested data set 
 	}
 
-	public Object depthFirstPreOrderSearch(IKey key) { // Trigger the depth-first pre-order
-		return depthFirstPreOrderSearch(root, key);    // search process
+	public Object depthFirstPreOrderSearch(IKey key) {        // Trigger the depth-first
+	    Node foundNode = depthFirstPreOrderSearch(root, key); // pre-order search process
+		return foundNode != null ? foundNode.data : null;   
 	}
 	
-	private static Object depthFirstInOrderSearch(Node current, IKey key) { // Search for
-		Object data = null; // a data set based on the depth-first pre-order traversal
+	protected static Node depthFirstInOrderSearch(Node current, IKey key) { // Search for
+		Node foundNode = null; // a data set based on the depth-first pre-order traversal
 		
 		if (current != null) { // We have not found the data set by reaching the bottom
-			data = depthFirstInOrderSearch(current.left, key); // Search at the left side
-			if (data == null && key.matches(current.data)) { // Not found but current stores
-				data = current.data; // the requested data set, store its reference
-			} else if (data == null) { // Still not found - search at the right
-					data = depthFirstInOrderSearch(current.right, key);
+			foundNode = depthFirstInOrderSearch(current.left, key); // Search the left side
+			if (foundNode == null && key.matches(current.data)) { // Not found but current
+				foundNode = current; // stores the requested data set, store its reference
+			} else if (foundNode == null) { // Still not found - search at the right
+					foundNode = depthFirstInOrderSearch(current.right, key);
 			}
 		}
-		return data; // Return either null or the reference to the requested data set
+		return foundNode; // Return either null or the reference to the requested data set
 	}
 
-	public Object depthFirstInOrderSearch(IKey key) { // Trigger the depth-first in-order
-		return depthFirstInOrderSearch(root, key);    // search process
+	public Object depthFirstInOrderSearch(IKey key) {        // Trigger the depth-first
+	    Node foundNode = depthFirstInOrderSearch(root, key); // in-order search process
+		return foundNode != null ? foundNode.data : null;
 	}
 	
-	private static Object depthFirstPostOrderSearch(Node current, IKey key) { // Search for
-		Object data = null; // a data set based on the depth-first pre-order traversal
+	protected static Node depthFirstPostOrderSearch(Node current, IKey key) { // Search for
+		Node foundNode = null; // a data set based on the depth-first pre-order traversal
 		
 		if (current != null) { // we have not found the data set by reaching the bottom
-			data = depthFirstPostOrderSearch(current.left, key); // Search at the left side
-			if (data == null) { // Not found? Than search also on the
-				data = depthFirstPostOrderSearch(current.right, key); // right side
-				if (data == null && key.matches(current.data)) { // Not found on the left
-					data = current.data; // side but in current - remember the reference.
+			foundNode = depthFirstPostOrderSearch(current.left, key); // Search at the left
+			if (foundNode == null) { // Not found? Than search also on the
+				foundNode = depthFirstPostOrderSearch(current.right, key); // right side
+				if (foundNode == null && key.matches(current.data)) { // Not found on the
+					foundNode = current; // left side but in current - remember current.
 				}
 			}
 		}
-		return data; // Return either null or the reference to the requested data set
+		return foundNode; // Return either null or the reference to the requested data set
 	}
 	
-	public Object depthFirstPostOrderSearch(IKey key) { // Trigger the depth-first
-		return depthFirstPostOrderSearch(root, key);    // post-order search process
+	public Object depthFirstPostOrderSearch(IKey key) {        // Trigger the depth-first
+	    Node foundNode = depthFirstPostOrderSearch(root, key); // post-order search process
+		return foundNode != null ? foundNode.data : null;
 	}
 	
-	public Object breadthFirstSearch(IKey key) {   // Search for a data set based on the
-		Object data = null;                        // breadth-first traversal
-		Queue queue = new Queue();                 // The helper-queue
+	protected static Node breadthFirstSearch(Node current, IKey key) { // Search for a data
+		Node foundNode = null;                      // set based on breadth-first
+		Queue queue = new Queue();                  // The helper-queue
 		
-		if (root != null) {
-		    queue.enqueue(root);                   // Enqueue the root-node of the tree
-		}  										   // Proceed while the queue is not
-		while (!queue.empty() && data == null) {   // empty and the data set was not found
-			Node current = (Node) queue.dequeue(); // Fetch a node from the queue
+		if (current != null) {
+		    queue.enqueue(current);                   // Enqueue the root-node of the tree
+		}  										      // Proceed while the queue is filled
+		while (!queue.empty() && foundNode == null) { // and the data set was not found
+			current = (Node) queue.dequeue();      // Fetch a node from the queue
 			if (key.matches(current.data)) {       // Is this the node of the requested
-				data = current.data;               // data set? Yes - store its reference
+				foundNode = current;               // data set? Yes - store its reference
 			} else {                               // No - enqueue the left and right
 				if (current.left != null) {        // child-nodes, but only if they exist 
 					queue.enqueue(current.left);
@@ -157,7 +160,12 @@ public class BTree {
 				}
 			}
 		}
-		return data; // Return either null or the reference to the requested data set
+		return foundNode; // Return either null or the reference to the requested data set
+	}
+	
+	public Object breadthFirstSearch(IKey key) {        // Trigger the breadth-first
+	    Node foundNode = breadthFirstSearch(root, key); // search process
+	    return foundNode != null ? foundNode.data : null;
 	}
 	
 	protected void removeLeaf(Node toRemove) { // Remove a leaf or a half-leave from

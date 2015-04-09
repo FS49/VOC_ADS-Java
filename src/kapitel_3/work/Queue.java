@@ -1,6 +1,6 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IRIterator;
+import kapitel_3.work.IRIterator;
 
 public class Queue {
 	int size = 0;

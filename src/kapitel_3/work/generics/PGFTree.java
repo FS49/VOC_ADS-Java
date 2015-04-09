@@ -1,7 +1,7 @@
 package kapitel_3.work.generics;
 
 public class PGFTree<T> {
-    Tree<PGFProxy> tree = null;
+    BTree<PGFProxy> tree = null;
     
     private static final String tikzHeader = "% copy verbatim into a fragile frame\n"
             + "% or \\input this code as pgf-file\n"
@@ -213,7 +213,7 @@ public class PGFTree<T> {
         return new PGFKey<T>(key);
     }
     
-    public PGFTree(Tree<PGFProxy> tree) {
+    public PGFTree(BTree<PGFProxy> tree) {
         if (!(tree instanceof IPGFTree<?>)) {
             throw new IllegalArgumentException("Tree passed does not implement IPGFTree");
         }
@@ -221,31 +221,31 @@ public class PGFTree<T> {
     }
     
     @SuppressWarnings("unchecked")
-    String getSubTreeFormat(Tree.Node<PGFProxy> node) {
+    String getSubTreeFormat(BTree.Node<PGFProxy> node) {
         return ((IPGFTree<PGFProxy>) tree).getSubTreeFormatFormat(node);
     }
     
     @SuppressWarnings("unchecked")
-    String getNodeFormat(Tree.Node<PGFProxy> node) {
+    String getNodeFormat(BTree.Node<PGFProxy> node) {
         return ((IPGFTree<PGFProxy>) tree).getNodeFormat(node);
     }
     
     @SuppressWarnings("unchecked")
-    String getChildrenFormat(Tree.Node<PGFProxy> node) {
+    String getChildrenFormat(BTree.Node<PGFProxy> node) {
         return ((IPGFTree<PGFProxy>) tree).getChildrenFormat(node);
     }
     
     @SuppressWarnings("unchecked")
-    String getChildFormat(Tree.Node<PGFProxy> node) {
+    String getChildFormat(BTree.Node<PGFProxy> node) {
         return ((IPGFTree<PGFProxy>) tree).getChildFormat(node);
     }
     
     @SuppressWarnings("unchecked")
-    String getEdgeFromParentFormat(Tree.Node<PGFProxy> node) {
+    String getEdgeFromParentFormat(BTree.Node<PGFProxy> node) {
         return ((IPGFTree<PGFProxy>) tree).getEdgeFromParentFormat(node);
     }
     
-    protected String treeToPGF(Tree.Node<PGFProxy> currentRoot, String tabs) {
+    protected String treeToPGF(BTree.Node<PGFProxy> currentRoot, String tabs) {
         String pgfTree = "[missing]";
         
         if (currentRoot != null) {

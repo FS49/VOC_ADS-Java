@@ -1,9 +1,9 @@
 package kapitel_3.work;
 
-import kapitel_3.vl.IComparator;
-import kapitel_3.vl.IKey;
+import kapitel_3.work.IComparator;
+import kapitel_3.work.IKey;
 
-public class SearchTree extends Tree {
+public class SearchTree extends BTree {
 	protected IComparator comparator = null; // A comparator used to compare data sets
 	
 	public SearchTree(IComparator comparator) { // Create a SearchTree which uses
@@ -100,13 +100,6 @@ public class SearchTree extends Tree {
 		}									  // Then remove this node for real
 	}
 	
-	public boolean remove(IKey key) {            // Remove a data set assoc. with a key
-		Node toRemove = binarySearch(root, key); // Search for the controlling node
-		remove(toRemove);                        // Remove the controlling node
-		
-		return toRemove != null;
-	}
-
     public boolean remove(Object data) {
         ReferenceKey refKey = new ReferenceKey(data);
         Node toRemove = binarySearch(root, refKey);

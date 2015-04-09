@@ -1,6 +1,6 @@
-package uebung_5.tests;
+package uebung_7.tests;
 
-import uebung_5.ue.ArrayCompare;
+import uebung_7.ue.ArrayCompare;
 
 public class TestArrayCompare {
 	public static void main(String[] args) {
