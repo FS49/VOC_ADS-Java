@@ -38,22 +38,21 @@ public class UE4BTree extends BTree {
 		breadthFirstAppend(new Node(null, data, null));	
 	}
 	
-	public void remove(IKey key) {
-	    Node toRemove = depthFirstPreOrderSearch(root, key);
-	    
-	    if (toRemove != null) {
-	        Node current = toRemove;
+	protected void remove(Node node) {
+	    if (node != null) {
+	        Node current = node;
 	        while (current.left != null) {
 	            current = current.left;
 	        }
-	        toRemove.data = current.data;
+	        node.data = current.data;
 	        this.removeLeaf(current);
 	    }
 	}
 	
 	public void remove(Object data) {
 	    ReferenceKey key = new ReferenceKey(data);
+        Node toRemove = depthFirstSearch(root, key);
 	    
-	    remove(key);
+	    remove(toRemove);
 	}
 }

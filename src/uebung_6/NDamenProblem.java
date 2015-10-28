@@ -9,7 +9,7 @@ public class NDamenProblem {
                 if (j == spalte && i == zeile) {
                     System.out.print("? ");
                 } else {
-                    System.out.print((array[j][i] ? 1 : 0) + " ");
+                    System.out.print((array[j][i] ? 0 : ".") + " ");
                 }
             }
             System.out.println();
@@ -102,7 +102,7 @@ public class NDamenProblem {
     }
     
     public static void main(String[] args) {
-        int n = 12;
+        int n = 5;
         
         boolean[][] array = new boolean[n][n];
         

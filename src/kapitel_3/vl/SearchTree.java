@@ -37,10 +37,10 @@ public class SearchTree extends BTree {
 				found = current;             // contain the requested data set?
 			} else {                         // No? Try to find it in an sub-tree
 				switch (comparator.compare(current.data, key)) { // Where to search?
-				case 1:                                       // Search on the left
+				case 1:                                 // Search on the left
 					found = binarySearch(current.left, key);  // Search to the left
 					break;
-				case 0: case -1:                              // Search on the right
+				case 0: case -1:                        // Search on the right
 					found = binarySearch(current.right, key); // Search to the right
 					break;
 				}
@@ -49,7 +49,7 @@ public class SearchTree extends BTree {
 		return found; // Return either null or the reference to the requested data set
 	}
 
-	public Object binarySearch(IKey key) {    // Trigger searching in the search-tree
+	public Object search(IKey key) {    // Trigger searching in the search-tree
 		Node found = binarySearch(root, key); // starting at the root
 		
 		return (found != null) ? found.data : null; // Return either null or the data set
@@ -102,6 +102,7 @@ public class SearchTree extends BTree {
 	
 	public boolean remove(Object data) {           // Remove a data set
 	    ReferenceKey key = new ReferenceKey(data); // Create a ReferenceKey
+	    
 		return remove(key);
 	}
 }

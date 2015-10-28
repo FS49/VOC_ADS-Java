@@ -2,7 +2,7 @@ package kapitel_3.work;
 
 import kapitel_3.work.IRIterator;
 
-public class Queue {
+public class Queue implements IQueue {
 	int size = 0;
 	DList list = new DList();
 	

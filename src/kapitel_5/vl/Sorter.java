@@ -149,7 +149,7 @@ public class Sorter {
             if (i < j) {           // Are there still elements to reorder?
                 exchange(a, i, j); // Yes - exchange them
                 i = i + 1;
-                j = j + 1;
+                j = j - 1;
             }
         }
         quickSort(a, left, j);  // Quicksort the left partial array

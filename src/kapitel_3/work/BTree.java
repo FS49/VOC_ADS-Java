@@ -77,7 +77,7 @@ public class BTree {
 	}												  // of the tree
 	
 	public void breadthFirst(IWorker worker) {     // Traverse the tree breadth-first
-		Queue queue = new Queue();			       // The helper-queue
+	    IQueue queue = Exercise.newInstance("Queue"); // The helper-queue
 		
 		if (root != null) {
 			queue.enqueue(root);			       // Enqueue the root of the tree
@@ -153,7 +153,7 @@ public class BTree {
 	
 	public Object breadthFirstSearch(IKey key) {   // Search for a data set based on the
 		Object data = null;                        // breadth-first traversal
-		Queue queue = new Queue();                 // The helper-queue
+        IQueue queue = Exercise.newInstance("Queue"); // The helper-queue
 		
 		if (root != null) {
 		    queue.enqueue(root);                   // Enqueue the root-node of the tree
@@ -239,7 +239,7 @@ public class BTree {
 	}
 	
 	private class BTreeIterator implements IFIterator { // Iterator, based on breadth-first
-		private Queue queue = new Queue();              // A helper-queue
+        IQueue queue = Exercise.newInstance("Queue");      // The helper-queue
 		
 		public BTreeIterator(Node startNode) { // New iterator, starting at startNode
 			if (startNode != null) {

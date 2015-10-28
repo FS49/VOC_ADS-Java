@@ -1,12 +1,15 @@
 package kapitel_3.work.tests;
 
+import kapitel_3.work.Exercise;
 import kapitel_3.work.SearchTree;
 import kapitel_3.work.PGFTree;
 import kapitel_3.work.IComparator;
 //import kapitel_3.vl.IKey;
 
-public class TestBSTree {
+public class TestBSTree extends Exercise {
 	public static void main(String[] args) {
+	    Exercise.registerExercise("kapitel_3.work");
+//	    registerExercise(SearchTree.class);
 		IComparator pgfComparator = PGFTree.comparator(new IntegerComparator());
 		
 		SearchTree sTree = new SearchTree(pgfComparator);
@@ -18,12 +21,14 @@ public class TestBSTree {
 //			System.out.println("Inserting number " + i + ": " + i);
 			sTree.insert(pgfTree.pgfProxy(a[i]));
 		}
-		
+
+        sTree.breadthFirst(new PrintWorker());
+        
 //		System.out.println("Height: " + avlTree.height());
 //		System.out.println("IsAVLTree: " + avlTree.isAVLTree());
 //		System.out.println("ISBalanced: " + avlTree.isAVLBalanced());
 
-		System.out.println(pgfTree.treeToPGF());
+//		System.out.println(pgfTree.treeToPGF());
 	/*	
 		Object data = null;
 

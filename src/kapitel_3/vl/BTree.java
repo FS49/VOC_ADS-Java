@@ -80,66 +80,27 @@ public class BTree {
 		}
 	}
 	
-	protected static Node depthFirstPreOrderSearch(Node current, IKey key) { // Search for
+	protected static Node depthFirstSearch(Node current, IKey key) { // Search for
 		Node foundNode = null; // a data set based on the depth-first pre-order traversal
 		
 		if (current != null) { // We have not found the data set by reaching the bottom
 			if (key.matches(current.data)) { // If the current node stores the requested
 				foundNode = current;         // data set remember its reference
 			} else { // If the current node didn't store the requested data set
-				foundNode = depthFirstPreOrderSearch(current.left, key); // search the left
+				foundNode = depthFirstSearch(current.left, key); // search the left
 				if (foundNode == null) { // Not found at the left try to find at the right
-					foundNode = depthFirstPreOrderSearch(current.right, key);
+					foundNode = depthFirstSearch(current.right, key);
 				}
 			}
 		}
 		return foundNode; // Return either null or the reference to the requested data set 
 	}
 
-	public Object depthFirstPreOrderSearch(IKey key) {        // Trigger the depth-first
-	    Node foundNode = depthFirstPreOrderSearch(root, key); // pre-order search process
+	public Object search(IKey key) { // Trigger the depth-first pre-order search process
+	    Node foundNode = depthFirstSearch(root, key);
 		return foundNode != null ? foundNode.data : null;   
 	}
-	
-	protected static Node depthFirstInOrderSearch(Node current, IKey key) { // Search for
-		Node foundNode = null; // a data set based on the depth-first pre-order traversal
 		
-		if (current != null) { // We have not found the data set by reaching the bottom
-			foundNode = depthFirstInOrderSearch(current.left, key); // Search the left side
-			if (foundNode == null && key.matches(current.data)) { // Not found but current
-				foundNode = current; // stores the requested data set, store its reference
-			} else if (foundNode == null) { // Still not found - search at the right
-					foundNode = depthFirstInOrderSearch(current.right, key);
-			}
-		}
-		return foundNode; // Return either null or the reference to the requested data set
-	}
-
-	public Object depthFirstInOrderSearch(IKey key) {        // Trigger the depth-first
-	    Node foundNode = depthFirstInOrderSearch(root, key); // in-order search process
-		return foundNode != null ? foundNode.data : null;
-	}
-	
-	protected static Node depthFirstPostOrderSearch(Node current, IKey key) { // Search for
-		Node foundNode = null; // a data set based on the depth-first pre-order traversal
-		
-		if (current != null) { // we have not found the data set by reaching the bottom
-			foundNode = depthFirstPostOrderSearch(current.left, key); // Search at the left
-			if (foundNode == null) { // Not found? Than search also on the
-				foundNode = depthFirstPostOrderSearch(current.right, key); // right side
-				if (foundNode == null && key.matches(current.data)) { // Not found on the
-					foundNode = current; // left side but in current - remember current.
-				}
-			}
-		}
-		return foundNode; // Return either null or the reference to the requested data set
-	}
-	
-	public Object depthFirstPostOrderSearch(IKey key) {        // Trigger the depth-first
-	    Node foundNode = depthFirstPostOrderSearch(root, key); // post-order search process
-		return foundNode != null ? foundNode.data : null;
-	}
-	
 	protected static Node breadthFirstSearch(Node current, IKey key) { // Search for a data
 		Node foundNode = null;                      // set based on breadth-first
 		Queue queue = new Queue();                  // The helper-queue

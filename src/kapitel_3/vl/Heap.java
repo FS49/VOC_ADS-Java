@@ -175,16 +175,18 @@ public abstract class Heap extends BTree {
 		return (found != null) ? found.data : null;
 	}
 	
+	protected boolean isHeap(Node parent, Node child) {
+	    return cs * comparator.compare(parent.data, child.data) > 0;
+	}
+	
 	protected boolean isHeap(Node current) {
 		boolean answer = true;
 		
 		if (current != null) {
-			if (current.left != null &&
-					cs * comparator.compare(current.data, current.left.data) > 0) {
+			if (current.left != null && isHeap(current, current.left)) {
 				answer = false;
 			}
-			if (current.right != null &&
-					cs * comparator.compare(current.data, current.right.data) > 0) {
+			if (current.right != null && isHeap(current, current.right)) {
 				answer = false;
 			}
 			if (answer) {

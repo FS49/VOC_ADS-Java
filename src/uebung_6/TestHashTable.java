@@ -1,6 +1,6 @@
-package kapitel_3.tests;
+package uebung_6;
 
-import kapitel_3.vl.HashTable;
+import kapitel_3.tests.Student;
 
 public class TestHashTable {
 	public static void main(String[] args) {
