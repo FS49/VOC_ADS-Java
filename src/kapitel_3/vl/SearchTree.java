@@ -49,7 +49,7 @@ public class SearchTree extends BTree {
 		return found; // Return either null or the reference to the requested data set
 	}
 
-	public Object search(IKey key) {    // Trigger searching in the search-tree
+	public Object search(IKey key) { // Trigger searching in the search-tree
 		Node found = binarySearch(root, key); // starting at the root
 		
 		return (found != null) ? found.data : null; // Return either null or the data set
@@ -73,7 +73,7 @@ public class SearchTree extends BTree {
 		return node;
 	}
 	
-	protected static Node replaceRoot(Node toRemove) {          // Replace a (sub)-root
+	protected static Node replaceRoot(Node toRemove) { // Replace a (sub)-root data set
 		Node replacementNode = null;
 		
 		if (toRemove != null) {
@@ -86,17 +86,18 @@ public class SearchTree extends BTree {
 		return (replacementNode != null) ? replacementNode : toRemove;
 	}
 
-	protected void remove(Node toRemove) {  // Remove a node
-		if (toRemove != null) {             // Is there a node to remove? Exchanging its
-			toRemove = replaceRoot(toRemove); // data set with an maximal one of the
-			removeLeaf(toRemove);		      // left or right sub-tree         
+	protected Node remove(Node toRemove) { // Remove a node
+		if (toRemove != null && toRemove.isInnerNode()) { // Is it an inner node?
+			toRemove = replaceRoot(toRemove); // Exchanging its data set with an extreme
+			removeLeaf(toRemove);		      // one of the right or left sub-tree         
 		}									  // Then remove this node for real
+		return toRemove;                      // Return actually removed node
 	}
 	
 	public boolean remove(Object data) {           // Remove a data set
 	    ReferenceKey key = new ReferenceKey(data); // Create a ReferenceKey
 	    Node toRemove = binarySearch(root, key);   // Search for the controlling node
-	    remove(toRemove);                          // Remove the controlling node
+	    toRemove = remove(toRemove);               // Remove the controlling node
 	    
 		return toRemove != null;
 	}

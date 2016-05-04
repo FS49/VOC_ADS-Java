@@ -24,6 +24,10 @@ public class BTree {
 		public boolean isRightChild() {
 			return parent != null && parent.right == this;
 		}
+		
+		public boolean isInnerNode() {
+		    return right != null && left != null;
+		}
 	}
 	
 	protected static void depthFirstPreOrder(Node current, IWorker worker) { // Traverse
