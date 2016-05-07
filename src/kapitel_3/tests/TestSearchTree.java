@@ -6,22 +6,22 @@ import kapitel_3.vl.IComparator;
 import kapitel_3.vl.SearchTree;
 
 public class TestSearchTree {
-	public static void main(String[] args) {
-		IComparator integerComparator = new IntegerComparator();
+    public static void main(String[] args) {
+        IComparator integerComparator = new IntegerComparator();
 
-		SearchTree searchTree = new SearchTree(integerComparator);
+        SearchTree searchTree = new SearchTree(integerComparator);
 
-		final int MAX = 20000;
+        final int MAX = 20000;
 
-		Random rand = new Random();
-		for (int i = 0; i < MAX; i++) {
-			System.out.println("+++++++++++++++++++++++++");
-			int n = rand.nextInt(100000);
-			System.out.println("Inserting number " + i + ": " + n);
-			searchTree.insert(n);
-			System.out.println("Height: " + searchTree.height());
-		}
+        Random rand = new Random();
+        for (int i = 0; i < MAX; i++) {
+            System.out.println("+++++++++++++++++++++++++");
+            int n = rand.nextInt(100000);
+            System.out.println("Inserting number " + i + ": " + n);
+            searchTree.insert(n);
+            System.out.println("Height: " + searchTree.height());
+        }
 
-		System.out.println();
-	}
+        System.out.println();
+    }
 }

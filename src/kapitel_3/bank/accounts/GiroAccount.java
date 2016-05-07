@@ -1,5 +1,5 @@
 package kapitel_3.bank.accounts;
 
 public class GiroAccount implements Account {
-	// Code of Class GiroAccount
+    // Code of Class GiroAccount
 }

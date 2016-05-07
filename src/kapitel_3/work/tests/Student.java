@@ -1,17 +1,17 @@
 package kapitel_3.work.tests;
 
 public class Student {	
-	protected String name;
-	protected String surName;
-	protected String matrNr;
-	
-	public Student(String name, String sureName, String matrNr) {
-		this.name = name;
-		this.surName = sureName;
-		this.matrNr = matrNr;
-	}
-	
-	public String toString() {
-		return "Name: " + name + "\nSurname: " + surName + "\nMatrNr: " + matrNr;
-	}
+    protected String name;
+    protected String surName;
+    protected String matrNr;
+    
+    public Student(String name, String sureName, String matrNr) {
+        this.name = name;
+        this.surName = sureName;
+        this.matrNr = matrNr;
+    }
+    
+    public String toString() {
+        return "Name: " + name + "\nSurname: " + surName + "\nMatrNr: " + matrNr;
+    }
 }

@@ -1,15 +1,15 @@
 package kapitel_3.work.generics;
 
 public class MinHeap<T> extends Heap<T> {
-	public MinHeap(IComparator<T> comparator) {
-		super(comparator);
-	}
+    public MinHeap(IComparator<T> comparator) {
+        super(comparator);
+    }
 
-	protected int comparatorSign() {
-		return +1;
-	}
-	
-	public Object extractMin() {
-		return extractRoot();
-	}
+    protected int comparatorSign() {
+        return +1;
+    }
+    
+    public Object extractMin() {
+        return extractRoot();
+    }
 }

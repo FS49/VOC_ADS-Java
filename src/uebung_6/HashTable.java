@@ -7,11 +7,11 @@ import kapitel_3.vl.IKey;
 import kapitel_3.vl.IWorker;
 
 public class HashTable {
-	protected Bucket[] buckets = null;
-	protected int size = 0;
-	protected int maxLoad = 0;
-	protected int currentLoad = 0;
-	
+    protected Bucket[] buckets = null;
+    protected int size = 0;
+    protected int maxLoad = 0;
+    protected int currentLoad = 0;
+    
     protected static class Bucket {
         protected static class TupleKey implements IKey {
             private String key;
@@ -78,83 +78,83 @@ public class HashTable {
             this.data = data;
         }
     }
-	
-	private static long sdbm(String s) {
+    
+    private static long sdbm(String s) {
       long hash = 0;
     
       for (int i = 0; i < s.length(); i++) {
-    	  hash = s.charAt(i) + (hash << 6) + (hash << 16) - hash;
+          hash = s.charAt(i) + (hash << 6) + (hash << 16) - hash;
       }
     
       return hash;
     }
-	
-	protected static long knuth(String s) {
-	    long hash = 0;
-	    
-	    for (int i = 0; i < s.length(); i++) {
-	        hash = ((hash << 5) ^ (hash >>> 27)) ^ s.charAt(i);
-	    }
-	    return hash;
-	}
-	
-	protected static long kernighamRitchie(String s) {
-	    long hash = 0;
-	    
-	    for (int i = 0; i < s.length(); i++) {
-	        hash += s.charAt(i);
-	    }
-	    return hash;
-	}
-	
-	protected static long stl(String s) {
-	    long hash = 0;
-	    
-	    for (int i = 0; i < s.length(); i++) {
-	        hash = 5 * hash + s.charAt(i);
-	    }
-	    return hash;
-    }
-	
-	protected static long java(String s)  {
-	    long hash = 0;
     
-	    for (int i = 0; i < s.length(); i++) {
-	        hash += (s.charAt(i) * 31) ^ (s.length() - 1 - i);
-	    }
-	    return hash;
+    protected static long knuth(String s) {
+        long hash = 0;
+        
+        for (int i = 0; i < s.length(); i++) {
+            hash = ((hash << 5) ^ (hash >>> 27)) ^ s.charAt(i);
+        }
+        return hash;
     }
-	
-	public HashTable() {
-		this(0);
-	}
-	
-	public HashTable(int exponent) {
-		size = 1 << exponent;
-		maxLoad = (int) (size * 0.75);
-		buckets = initBuckets(size);
-	}
-	
-	protected static Bucket[] initBuckets(int size) {
-		return new Bucket[size];
-	}
-	
-	public void insert(String key, Object data) {
-		long hash = sdbm(key);
-		
-		int index = (int) (hash & (size - 1));
-		
-		if (buckets[index] == null) {
-		    buckets[index] = new Bucket();
-		    currentLoad++;
-		}
-		
-		buckets[index].insert(new Tuple(hash, key, data));
+    
+    protected static long kernighamRitchie(String s) {
+        long hash = 0;
+        
+        for (int i = 0; i < s.length(); i++) {
+            hash += s.charAt(i);
+        }
+        return hash;
+    }
+    
+    protected static long stl(String s) {
+        long hash = 0;
+        
+        for (int i = 0; i < s.length(); i++) {
+            hash = 5 * hash + s.charAt(i);
+        }
+        return hash;
+    }
+    
+    protected static long java(String s)  {
+        long hash = 0;
+    
+        for (int i = 0; i < s.length(); i++) {
+            hash += (s.charAt(i) * 31) ^ (s.length() - 1 - i);
+        }
+        return hash;
+    }
+    
+    public HashTable() {
+        this(0);
+    }
+    
+    public HashTable(int exponent) {
+        size = 1 << exponent;
+        maxLoad = (int) (size * 0.75);
+        buckets = initBuckets(size);
+    }
+    
+    protected static Bucket[] initBuckets(int size) {
+        return new Bucket[size];
+    }
+    
+    public void insert(String key, Object data) {
+        long hash = sdbm(key);
+        
+        int index = (int) (hash & (size - 1));
+        
+        if (buckets[index] == null) {
+            buckets[index] = new Bucket();
+            currentLoad++;
+        }
+        
+        buckets[index].insert(new Tuple(hash, key, data));
 
-		if (currentLoad >= maxLoad) {
-			resize();
-		}
-	}
+        if (currentLoad >= maxLoad) {
+            resize();
+        }
+    }
     
     protected void resize() {
         final Bucket[] newBuckets = initBuckets(size << 1);
@@ -182,7 +182,7 @@ public class HashTable {
         maxLoad = (int) (size * 0.75);
         buckets = newBuckets;
     }
-	
+    
     public Object get(String key) {
         Object ret = null;
         
@@ -199,8 +199,8 @@ public class HashTable {
         
         return ret;
     }
-	
-	public void remove(String key) {
+    
+    public void remove(String key) {
         long hash = sdbm(key);
         int index = (int) (hash & (size -1 ));
         
@@ -216,5 +216,5 @@ public class HashTable {
                 currentLoad--;
             }
         }
-	}
+    }
 }

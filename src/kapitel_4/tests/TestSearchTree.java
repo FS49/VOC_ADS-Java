@@ -6,18 +6,18 @@ import kapitel_3.vl.PrintTree;
 import kapitel_3.vl.SearchTree;
 
 public class TestSearchTree {
-	public static void main(String[] args) {
-		IComparator iComparator = new IntegerComparator();
+    public static void main(String[] args) {
+        IComparator iComparator = new IntegerComparator();
 
-		SearchTree searchTree = new SearchTree(iComparator);
+        SearchTree searchTree = new SearchTree(iComparator);
 
-		int[] array = {5, 3, 7, 4, 2, 6, 8};
+        int[] array = {5, 3, 7, 4, 2, 6, 8};
 
-		for(int i = 0; i < array.length; i++) {
-		    searchTree.insert(array[i]);
-		}
-		PrintTree pt = new PrintTree(searchTree);
-		
-		System.out.println(pt.treeToPGF());
-	}
+        for(int i = 0; i < array.length; i++) {
+            searchTree.insert(array[i]);
+        }
+        PrintTree pt = new PrintTree(searchTree);
+        
+        System.out.println(pt.treeToPGF());
+    }
 }
