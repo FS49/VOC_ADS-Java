@@ -101,4 +101,47 @@ public class SearchTree extends BTree {
         
         return toRemove != null;
     }
+    
+    private void updateParents(Node oldCurrentRoot, Node newCurrentRoot) {
+        if (oldCurrentRoot.isLeftChild()) {               // After a rotation update also
+            oldCurrentRoot.parent.left = newCurrentRoot;  // all parent-references so that
+        } else if (oldCurrentRoot.isRightChild()) {       // the tree is correctly
+            oldCurrentRoot.parent.right = newCurrentRoot; // connected again
+        }
+        newCurrentRoot.parent = oldCurrentRoot.parent;
+        oldCurrentRoot.parent = newCurrentRoot;
+        
+        if (oldCurrentRoot == root) { // Is the oldCurrentRoot the root of the tree then
+            root = newCurrentRoot;    // the newCurrentRoot becomes the root of the tree.
+        }
+    }
+    
+    protected Node rotateLeft(Node oldCurrentRoot) { // The rotation to the left
+        Node newCurrentRoot = oldCurrentRoot.right;      // Determine the new current root
+        
+        oldCurrentRoot.right = newCurrentRoot.left;      // Let the left child of the new
+        if (newCurrentRoot.left != null) {               // current root be the new right
+            newCurrentRoot.left.parent = oldCurrentRoot; // child of the old current root
+        }                                                // and proper update the parent
+        newCurrentRoot.left = oldCurrentRoot; // The old current root becomes the left
+                                              // child of the new current root
+        updateParents(oldCurrentRoot, newCurrentRoot);   // Proper connect the balanced
+                                                         // sub-tree to the whole tree
+        return newCurrentRoot;                           // Deliver the new current root
+    }
+    
+    
+    protected Node rotateRight(Node oldCurrentRoot) { // The rotation to the right
+        Node newCurrentRoot = oldCurrentRoot.left;        // Determine the new current root
+        
+        oldCurrentRoot.left = newCurrentRoot.right;       // Let the right child of the new
+        if (newCurrentRoot.right != null) {               // current root be the new left
+            newCurrentRoot.right.parent = oldCurrentRoot; // child of the old current root
+        }                                                 // and proper update the parent
+        newCurrentRoot.right = oldCurrentRoot; // The old current root becomes the right
+                                               // child of the new current root
+        updateParents(oldCurrentRoot, newCurrentRoot);    // Proper connect the balanced
+                                                          // sub-tree to the whole tree
+        return newCurrentRoot;                            // Deliver the new current root
+    }
 }

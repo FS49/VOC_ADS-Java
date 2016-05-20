@@ -13,56 +13,26 @@ public class AVLTree extends SearchTree {         // An AVLTree is a SearchTree
         super(comparator);
     }
     
-    private void updateParents(AVLNode oldCurrentRoot, AVLNode newCurrentRoot) {
-        if (oldCurrentRoot.isLeftChild()) {               // After a rotation update also
-            oldCurrentRoot.parent.left = newCurrentRoot;  // all parent-references so that
-        } else if (oldCurrentRoot.isRightChild()) {       // the tree is correctly
-            oldCurrentRoot.parent.right = newCurrentRoot; // connected again
-        }
-        newCurrentRoot.parent = oldCurrentRoot.parent;
-        oldCurrentRoot.parent = newCurrentRoot;
+    protected AVLNode rotateLeft(AVLNode oldCurrentRoot) {
+        AVLNode newCurrentRoot = (AVLNode) super.rotateLeft(oldCurrentRoot);
         
-        if (oldCurrentRoot == root) { // Is the oldCurrentRoot the root of the tree then
-            root = newCurrentRoot;    // the newCurrentRoot becomes the root of the tree.
-        }
-    }
-    
-    private AVLNode rotateLeft(AVLNode oldCurrentRoot) { // The rotation to the left
-        AVLNode newCurrentRoot = (AVLNode) oldCurrentRoot.right; // Determine the new
-                                                         // current root
-        oldCurrentRoot.right = newCurrentRoot.left;      // Let the left child of the new
-        if (newCurrentRoot.left != null) {               // current root be the new right
-            newCurrentRoot.left.parent = oldCurrentRoot; // child of the old current root
-        }                                                // and proper update the parent
-        newCurrentRoot.left = oldCurrentRoot; // The old current root becomes the left
-                                              // child of the new current root
         oldCurrentRoot.balance = oldCurrentRoot.balance - 1 // Update all balances
                 - Math.max(0, newCurrentRoot.balance);      // according to the theory
         newCurrentRoot.balance = newCurrentRoot.balance - 1 
                 + Math.min(0, oldCurrentRoot.balance);
-
-        updateParents(oldCurrentRoot, newCurrentRoot);   // Proper connect the balanced
-                                                         // sub-tree to the whole tree
-        return newCurrentRoot;                           // Deliver the new current root
+        
+        return newCurrentRoot;
     }
     
-    private AVLNode rotateRight(AVLNode oldCurrentRoot) { // The rotation to the right
-        AVLNode newCurrentRoot = (AVLNode) oldCurrentRoot.left; // Determine the new
-                                                          // current root
-        oldCurrentRoot.left = newCurrentRoot.right;       // Let the right child of the new
-        if (newCurrentRoot.right != null) {               // current root be the new left
-            newCurrentRoot.right.parent = oldCurrentRoot; // child of the old current root
-        }                                                 // and proper update the parent
-        newCurrentRoot.right = oldCurrentRoot; // The old current root becomes the right
-                                               // child of the new current root
+    protected AVLNode rotateRight(AVLNode oldCurrentRoot) {
+        AVLNode newCurrentRoot = (AVLNode) super.rotateRight(oldCurrentRoot);
+        
         oldCurrentRoot.balance = oldCurrentRoot.balance + 1 // Update all balances
                 - Math.min(0, newCurrentRoot.balance);      // according to the theory
         newCurrentRoot.balance = newCurrentRoot.balance + 1 
                 + Math.max(0, oldCurrentRoot.balance);
         
-        updateParents(oldCurrentRoot, newCurrentRoot);    // Proper connect the balanced
-                                                          // sub-tree to the whole tree
-        return newCurrentRoot;                            // Deliver the new current root
+        return newCurrentRoot;
     }
     
     private AVLNode balanceLeftLoaded(AVLNode currentRoot) { // Balance a left-loaded
@@ -118,24 +88,21 @@ public class AVLTree extends SearchTree {         // An AVLTree is a SearchTree
         }
         return newCurrentRoot; // Deliver the new current root
     }
-
-    protected void grownTo(AVLNode node) {      // Message to all parents that a sub
-        AVLNode parent = (AVLNode) node.parent; // tree indicated by the passed node has
-                                                // grown due to the insertion of a new node
-        if (parent != null) {                   // Stop at the root (anchor of recursion)
+    
+    protected void grownTo(AVLNode node) {      // Message to all parents that a sub tree
+        AVLNode parent = (AVLNode) node.parent; // indicated by the passed node has grown
+                                                // due to the insertion of a new node. Stop
+        if (parent != null) {                   // at the root (anchor of recursion)
             if (node.isLeftChild()) {           // Update the balance of the parent
-                parent.balance--;               // according to the side on which the
-            } else if (node.isRightChild()) {   // sub-tree has grown
+                parent.balance--;               // according to the side on which the sub-
+            } else if (node.isRightChild()) {   // tree has grown
                 parent.balance++;
             }
-            switch (parent.balance) {           // Let the balance of the parent decide if
-            case -2: case +2:                   // the AVL-requirement is injured or not
-                balance(parent);                // If injured, balance the tree at the
-                break;                          // parent node
-            case -1: case +1:                   // If it's not injured, but the tree is not
-                grownTo(parent);                // perfectly balanced, report the growth of
-                break;                          // the tree up to the next parent
-            }
+            if (parent.balance == -2 || parent.balance == +2) { // If the AVL-requirement
+                parent = balance(parent);       // is injured, balance the tree at the
+            } else if (parent.balance != 0) {   // current node. If it's not injured, but
+                grownTo(parent);                // the tree has grown, message this to the
+            }                                   // parent of the parent
         }
     }
 
@@ -145,26 +112,21 @@ public class AVLTree extends SearchTree {         // An AVLTree is a SearchTree
         grownTo(newAVLNode);                                // parents
     }
     
-    protected void shrunkBy(AVLNode node) {     // Message to all parents that a sub
+    protected void shrunkBy(AVLNode node) {     // Message to all parents that a sub-tree
         AVLNode parent = (AVLNode) node.parent; // tree indicated by the passed node has
                                                 // shrunken due to the removal of a node
         if (parent != null) {                   // Stop at the root (anchor of recursion)
             if (node.isLeftChild()) {           // Update the balance of the parent
-                parent.balance++;               // according to the side on which the
-            } else if (node.isRightChild()) {   // sub-tree has shrunken
+                parent.balance++;               // according to the side on which the sub-
+            } else if (node.isRightChild()) {   // tree has shrunken
                 parent.balance--;
             }
-            switch (parent.balance) {           // Let the balance of the parent decide if
-            case -2: case +2:                   // the AVL-requirement is injured or not
-                AVLNode newParent = balance(parent); // If injured, balance the tree at the
-                if (newParent.balance == 0) {        // parent node and if the balanced
-                    shrunkBy(newParent);             // tree is also shrunken report this
-                }                                    // up to the next parent
-                break;
-            case 0:               // The tree is shrunken due the removal of a node but
-                shrunkBy(parent); // the AVL-requirement is not injured. Thus, report the
-                break;            // contraction up to the next parent
-            }
+            if (parent.balance == -2 || parent.balance == +2) { // If the AVL-requirement
+                parent = balance(parent);       // is injured, balance the tree at the
+            }                                   // current node.
+            if (parent.balance == 0) {          // If the tree still has been shrunken,
+                shrunkBy(parent);               // message this to the parent of the
+            }                                   // parent
         }
     }
     
