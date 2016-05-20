@@ -4,8 +4,8 @@ import kapitel_3.vl.DList;
 import kapitel_3.vl.IRIterator;
 
 public class Queue {
-    int size = 0;
-    DList list = new DList();
+    protected int size = 0;
+    protected DList list = new DList();
     
     public void enqueue(Object data) {
         list.prepend(data);
