@@ -133,10 +133,10 @@ public class BTree {
         return foundNode != null ? foundNode.data : null;
     }
     
-    protected void removeLeaf(Node toRemove) { // Remove a leaf or a half-leave from
-        if (toRemove.isLeftChild()) {          // the tree.
-            toRemove.parent.left = null;
-            if (toRemove.right != null) {
+    protected void removeLeaf(Node toRemove) { // Remove a leaf or a half-leave from the
+        if (toRemove.isLeftChild()) {          // tree. This algorithm has an error -
+            toRemove.parent.left = null;       // deliberately. The students have to search
+            if (toRemove.right != null) {      // for it and to discuss it.
                 toRemove.parent.left = toRemove.right;
                 toRemove.right.parent = toRemove.parent;
             } else if (toRemove.left != null) {
