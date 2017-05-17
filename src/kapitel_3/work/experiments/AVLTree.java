@@ -1,8 +1,10 @@
 package kapitel_3.work.experiments;
 
-import kapitel_3.work.IComparator;
-import kapitel_3.work.IKey;
-import kapitel_3.work.SearchTree;
+import kapitel_3.vl.IComparator;
+import kapitel_3.vl.IFIterator;
+import kapitel_3.vl.IKey;
+import kapitel_3.vl.ReferenceKey;
+import kapitel_3.vl.SearchTree;
 
 public class AVLTree extends SearchTree {
     private static final class AVLLayer {
@@ -14,7 +16,6 @@ public class AVLTree extends SearchTree {
         }
     }
     
-    
     private static final class AVLKey implements IKey {
         private IKey key = null;
         
@@ -22,12 +23,10 @@ public class AVLTree extends SearchTree {
             this.key = key;
         }
         
-        @Override
         public boolean matches(Object aVLLayer) {
             return key.matches(((AVLLayer) aVLLayer).data);
         }
     }
-    
     
     private static final class AVLComparator implements IComparator {
         private IComparator comparator = null;
@@ -36,89 +35,41 @@ public class AVLTree extends SearchTree {
             this.comparator = comparator;
         }
         
-        @Override
         public int compare(Object aVLLayer1, Object aVLLayer2) {
             return comparator.compare(((AVLLayer) aVLLayer1).data,
                     ((AVLLayer) aVLLayer2).data);
         }
 
-        @Override
         public int compare(Object aVLLayer, IKey aVLKey) {
             return comparator.compare(((AVLLayer) aVLLayer).data, ((AVLKey) aVLKey).key);
         }
         
     }
-
     
     public AVLTree(IComparator comparator) {
         super(new AVLComparator(comparator));
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    private void updateParents(Node oldCurrentRoot, Node newCurrentRoot) {
-        if (oldCurrentRoot.isLeftChild()) {               // After a rotation update also
-            oldCurrentRoot.parent.left = newCurrentRoot;  // all parent-references so that
-        } else if (oldCurrentRoot.isRightChild()) {       // the tree is correctly
-            oldCurrentRoot.parent.right = newCurrentRoot; // connected again
-        }
-        newCurrentRoot.parent = oldCurrentRoot.parent;
-        oldCurrentRoot.parent = newCurrentRoot;
+    protected Node rotateLeft(Node oldCurrentRoot) {
+        Node newCurrentRoot = super.rotateLeft(oldCurrentRoot);
         
-        if (oldCurrentRoot == root) { // Is the oldCurrentRoot the root of the tree then
-            root = newCurrentRoot;    // the newCurrentRoot becomes the root of the tree.
-        }
-        
-    }
-    
-    protected Node rotateLeft(Node oldCurrentRoot) { // The rotation to the left
-        Node newCurrentRoot = oldCurrentRoot.right; // Determine the new current root
-        
-        oldCurrentRoot.right = newCurrentRoot.left;      // Let the left child of the new
-        if (newCurrentRoot.left != null) {               // current root be the new right
-            newCurrentRoot.left.parent = oldCurrentRoot; // child of the old current root
-        }                                                // and proper update the parent
-        newCurrentRoot.left = oldCurrentRoot; // The old current root becomes the left
-                                              // child of the new current root
         ((AVLLayer) oldCurrentRoot.data).balance = ((AVLLayer) oldCurrentRoot.data).balance - 1 // Update all balances
                 - Math.max(0, ((AVLLayer) newCurrentRoot.data).balance);      // according to the theory
         ((AVLLayer) newCurrentRoot.data).balance = ((AVLLayer) newCurrentRoot.data).balance - 1 
                 + Math.min(0, ((AVLLayer) oldCurrentRoot.data).balance);
-
-        updateParents(oldCurrentRoot, newCurrentRoot);   // Proper connect the balanced
-                                                         // sub-tree to the whole tree
-        return newCurrentRoot;                           // Deliver the new current root
+        
+        return newCurrentRoot;
     }
     
-    protected Node rotateRight(Node oldCurrentRoot) { // The rotation to the right
-        Node newCurrentRoot = oldCurrentRoot.left; // Determine the new current root
+    protected Node rotateRight(Node oldCurrentRoot) {
+        Node newCurrentRoot = super.rotateRight(oldCurrentRoot);
         
-        oldCurrentRoot.left = newCurrentRoot.right;       // Let the right child of the new
-        if (newCurrentRoot.right != null) {               // current root be the new left
-            newCurrentRoot.right.parent = oldCurrentRoot; // child of the old current root
-        }                                                 // and proper update the parent
-        newCurrentRoot.right = oldCurrentRoot; // The old current root becomes the right
-                                               // child of the new current root
         ((AVLLayer) oldCurrentRoot.data).balance = ((AVLLayer) oldCurrentRoot.data).balance + 1 // Update all balances
                 - Math.min(0, ((AVLLayer) newCurrentRoot.data).balance);      // according to the theory
         ((AVLLayer) newCurrentRoot.data).balance = ((AVLLayer) newCurrentRoot.data).balance + 1 
                 + Math.max(0, ((AVLLayer) oldCurrentRoot.data).balance);
         
-        updateParents(oldCurrentRoot, newCurrentRoot);    // Proper connect the balanced
-                                                          // sub-tree to the whole tree
-        return newCurrentRoot;                            // Deliver the new current root
+        return newCurrentRoot;
     }
     
     private Node balanceLeftLoaded(Node currentRoot) { // Balance a left-loaded
@@ -223,17 +174,31 @@ public class AVLTree extends SearchTree {
             }
         }
     }
-    
-    protected void remove(Node toRemove) { // The overwritten remove-method reports the
-        if (toRemove != null) {            // contraction of a sub-tree up to the parents
-            toRemove = replaceRoot(toRemove);
-            shrunkBy(toRemove);
-            removeLeaf(toRemove);
+
+    public boolean remove(Object data) {           // Remove a data set
+        AVLKey key = new AVLKey(new ReferenceKey(data)); // Create a ReferenceKey
+        Node toRemove = binarySearch(root, key);   // Search for the controlling node
+        if (toRemove != null) {
+            Node replacementNode = searchForReplacement(toRemove); // Exchanging its data set with an extreme
+            shrunkBy(replacementNode);
+            Object tmp = ((AVLLayer) toRemove.data).data;
+            ((AVLLayer) toRemove.data).data = ((AVLLayer) replacementNode.data).data;
+            ((AVLLayer) replacementNode.data).data = tmp;
+            removeLeaf(replacementNode);             // one of the right or left sub-tree
         }
+        
+        return toRemove != null;
     }
     
     public Object search(IKey key) {
-        return binarySearch(new AVLKey(key));
+        Object data = null;
+        
+        Node found = binarySearch(root, new AVLKey(key));
+        if (found != null) {
+            data = ((AVLLayer) found.data).data;
+        }
+        
+        return data;
     }
     
     protected static boolean isBalanceValid(Node node) { // Check if the tree is a valid
@@ -254,7 +219,7 @@ public class AVLTree extends SearchTree {
         return isBalanceValid(root);
     }
     
-    protected static <T> boolean isAVLTree(Node node) { // Check if the tree is
+    protected static boolean isAVLTree(Node node) { // Check if the tree is
         boolean answer = true;                          // correctly balanced to be a
                                                         // valid the AVL-requirement
         if (node != null) {
@@ -270,5 +235,19 @@ public class AVLTree extends SearchTree {
     
     public boolean isAVLTree() {
         return isAVLTree(root);
+    }
+    
+    private class AVLTreeIterator extends BTreeIterator { // Iterator, based on breadth-first
+        public AVLTreeIterator(Node startNode) {
+            super(startNode);
+        }
+        
+        public Object next() {
+            return ((AVLLayer) super.next()).data;
+        }
+    }
+    
+    public IFIterator iterator() {      // Factory method for an IFIterator
+        return new AVLTreeIterator(root); // Create a new iterator starting at the root
     }
 }
