@@ -1,8 +1,5 @@
 package miscellany.astar;
 
-import kapitel_3.vl.SList;
-import uebung_3.ue.PriorityQueue;
-
 public class AStar {
     private class Node {
         Coordinate parent = null;
